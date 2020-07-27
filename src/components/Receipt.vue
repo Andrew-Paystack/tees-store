@@ -6,11 +6,15 @@
       </div>
       <div class="form-item">
         <label>Email</label>
-        <input type="email" v-model="email">
+        <input type="email" v-model="email" />
       </div>
       <div class="form-item">
         <label>Address</label>
         <textarea type="email" v-model="address" />
+      </div>
+      <div class="form-item">
+        <label>Mobile Money number</label>
+        <input v-model="momo" />
       </div>
     </div>
     <div class="receipt__items">
@@ -46,7 +50,8 @@ export default {
     return {
       email: '',
       address: '',
-      deliveryFee: 1000,
+      deliveryFee: 10,
+      momo: '',
       loading: false
     }
   },
@@ -77,43 +82,53 @@ export default {
       this.loading = true
       const data = {
         email: this.email,
-        amount: this.nairaToKobo(this.total)
+        amount: this.total.toFixed(2),
+        referenceNumber: this.randomRef(),
+        phone: this.momo,
+        network: 'MTN'
       }
-      const url = `${process.env.VUE_APP_API}/transaction/initialize`
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(data)
+      this.$http.post('/direct_debits.json', JSON.stringify(data)).then((resp) => {
+        // TODO: Create Instruction box or show success message.
+        // TODO: figure out a subscriptions model.
+        console.log(resp.data)
       })
-        .then(response => response.json())
-        .then(res => {
-          const paystack = new window.PaystackPop()
-          paystack.resumeTransaction(res.data.access_code)
-          this.loading = false
-          this.resetForm()
-        })
-        .catch(() => {
-          // handle error here
-        })
+      // fetch(url, {
+      //   method: 'POST',
+      //   headers: {
+      //     'content-type': 'application/json'
+      //   },
+      //   body: JSON.stringify(data)
+      // })
+      //   .then(response => response.json())
+      //   .then(res => {
+      //     const paystack = new window.PaystackPop()
+      //     paystack.resumeTransaction(res.data.access_code)
+      //     this.loading = false
+      //     this.resetForm()
+      //   })
+      //   .catch(() => {
+      //     // handle error here
+      //   })
     },
     resetForm () {
       this.email = ''
       this.address = ''
     },
-    nairaToKobo (amount) {
-      return (amount * 100).toFixed(0)
+    randomRef () {
+      return 'PYSTCK ' + ((Math.random() * (10024 - 1024) + 1024) * 10000).toFixed(0)
     },
     parseCurrency (amount) {
-      return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(amount)
+      return new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'GHS'
+      }).format(amount)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-$gray: #F2F5F7;
+$gray: #f2f5f7;
 
 .receipt {
   display: flex;
@@ -150,7 +165,7 @@ $gray: #F2F5F7;
       cursor: pointer;
 
       &:disabled {
-        background-color: rgba(59,183,94, 0.65);
+        background-color: rgba(59, 183, 94, 0.65);
         cursor: default;
       }
 
@@ -181,7 +196,8 @@ $gray: #F2F5F7;
     font-weight: 500;
   }
 
-  input, textarea {
+  input,
+  textarea {
     font-size: 14px;
     color: #737575;
     padding: 10px;

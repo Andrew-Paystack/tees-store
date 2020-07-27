@@ -60,7 +60,7 @@ export default {
       return this.parseCurrency(this.gifts[index].price * this.gifts[index].quantity)
     },
     parseCurrency (amount) {
-      return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(amount)
+      return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'GHS' }).format(amount)
     }
   }
 }

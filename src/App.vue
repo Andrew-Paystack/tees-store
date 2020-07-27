@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <Layout />
+    <Magazine />
   </div>
 </template>
 
 <script>
 import Layout from './components/Layout.vue'
-
+import Magazine from './components/Magazine.vue'
 export default {
   name: 'App',
   components: {
-    Layout
+    Layout,
+    Magazine
   }
 }
 </script>
