@@ -18,18 +18,6 @@
       </div>
     </div>
     <div class="receipt__items">
-      <div class="receipt-item">
-        <span>Items subtotal</span>
-        <span>{{ parseCurrency(subtotal) }}</span>
-      </div>
-      <div class="receipt-item">
-        <span>Delivery fees</span>
-        <span>{{ parseCurrency(deliveryFee) }}</span>
-      </div>
-      <div class="receipt-item">
-        <span>VAT (7.5%)</span>
-        <span>{{ parseCurrency(vat) }}</span>
-      </div>
       <div class="receipt-total">
         <span>Total</span>
         <span>{{ parseCurrency(total) }}</span>
@@ -50,7 +38,6 @@ export default {
     return {
       email: '',
       address: '',
-      deliveryFee: 10,
       momo: '',
       loading: false
     }
@@ -74,7 +61,7 @@ export default {
       return 0.075 * this.subtotal
     },
     total () {
-      return this.subtotal + this.deliveryFee + this.vat
+      return this.subtotal
     }
   },
   methods: {
@@ -84,13 +71,12 @@ export default {
         email: this.email,
         amount: this.total.toFixed(2),
         referenceNumber: this.randomRef(),
-        phone: this.momo,
+        phone: this.momoFormat(),
         network: 'MTN'
       }
       this.$http.post('/direct_debits.json', JSON.stringify(data)).then((resp) => {
-        // TODO: Create Instruction box or show success message.
-        // TODO: figure out a subscriptions model.
-        console.log(resp.data)
+        // console.log(resp.data)
+        alert('Transaction Successful')
       })
       // fetch(url, {
       //   method: 'POST',
@@ -110,9 +96,17 @@ export default {
       //     // handle error here
       //   })
     },
+    momoFormat () {
+      if (this.momo.charAt(0) === '0') {
+        return this.momo.replace('0', '233')
+      } else {
+        return this.momo
+      }
+    },
     resetForm () {
       this.email = ''
       this.address = ''
+      this.momo = ''
     },
     randomRef () {
       return 'PYSTCK ' + ((Math.random() * (10024 - 1024) + 1024) * 10000).toFixed(0)

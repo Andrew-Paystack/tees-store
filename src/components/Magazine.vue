@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <div class="header">
-      <h2>Daily Subscription</h2>
+      <h2>Daily Savings Plan</h2>
     </div>
     <div class="itemlist">
       <div class="itemlist__header">
@@ -9,11 +9,7 @@
         <div>Description</div>
         <div>Price</div>
       </div>
-      <div
-        class="itemlist__body"
-        v-for="(magazine, index) in magazines"
-        :key="index"
-      >
+      <div class="itemlist__body" v-for="(magazine, index) in magazines" :key="index">
         <div class="item__content">
           <div class="item__image">
             <img :src="magazine.image" />
@@ -77,22 +73,28 @@ export default {
     makePayment () {
       const data = {
         email: this.email,
-        amount: 49.99,
-        thirdPartyReferenceNo: this.randomRef(),
-        phone: this.momo,
+        amount: 2.0,
+        refNo: this.randomRef(),
+        phone: this.momoFormat(),
         frequency: 1,
         startDate: '2020-07-27',
         endDate: '2020-08-27',
         network: 'MTN'
       }
-      this.$http
-        .post('/mandates.json', JSON.stringify(data))
-        .then(resp => {
-          // TODO: Create Instruction box or show success message.
-          // TODO: figure out a subscriptions model.
-          console.log(resp.data)
-        })
-      console.log('paid' + this.price)
+
+      this.$http.post('/mandates.json', JSON.stringify(data)).then((resp) => {
+        // TODO: Create Instruction box or show success message.
+        // console.log(resp.data)
+        alert('Transaction Successful')
+      })
+      // console.log('paid' + this.price)
+    },
+    momoFormat () {
+      if (this.momo.charAt(0) === '0') {
+        return this.momo.replace('0', '233')
+      } else {
+        return this.momo
+      }
     },
     randomRef () {
       return (

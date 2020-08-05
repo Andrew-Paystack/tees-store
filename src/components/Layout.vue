@@ -36,7 +36,7 @@ $light-gray: #fbfbfb;
 
   &__right {
     width: 30vw;
-    height: 100vh;
+    height: 80vh;
     padding: 32px;
   }
 }

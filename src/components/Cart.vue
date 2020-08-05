@@ -17,7 +17,7 @@
           </div>
           <div class="item__description">
             <h4>{{ gift.name }}</h4>
-            <span>Boxes: {{ gift.size }}</span>
+            <span>Size: {{ gift.size }}</span>
             <span>Color: {{ gift.color }}</span>
           </div>
         </div>
