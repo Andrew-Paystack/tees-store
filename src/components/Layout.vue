@@ -6,18 +6,26 @@
     <div class="layout__right">
       <Receipt />
     </div>
+    <!-- <Magazine /> -->
   </div>
 </template>
 
 <script>
 import Cart from './Cart.vue'
 import Receipt from './Receipt.vue'
-
+// import Magazine from './Magazine.vue'
 export default {
   name: 'Layout',
   components: {
     Cart,
     Receipt
+
+    // Magazine
+  },
+  mounted: function () {
+    if (!localStorage.getItem('shopper')) {
+      this.$router.push('/login')
+    }
   }
 }
 </script>

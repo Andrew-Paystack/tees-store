@@ -12,10 +12,19 @@ export default new Router({
       component: () => import('./components/Layout.vue')
     },
     {
-      path: 'subscribe',
-      name: 'magazine',
-      component: () => import('./components/Magazine.vue')
-
+      path: '/shopping',
+      name: 'shopping',
+      component: () => import('./components/Layout.vue')
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import('./components/Signup.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('./components/Login.vue')
     }
   ]
 })

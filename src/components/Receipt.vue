@@ -14,7 +14,7 @@
       </div>
       <div class="form-item">
         <label>Mobile Money number</label>
-        <input v-model="momo" />
+        <input v-model="momo" readonly />
       </div>
     </div>
     <div class="receipt__items">
@@ -38,7 +38,7 @@ export default {
     return {
       email: '',
       address: '',
-      momo: '',
+      momo: localStorage.getItem('shopper').replace(/"/g, ''),
       loading: false
     }
   },
@@ -74,10 +74,12 @@ export default {
         phone: this.momoFormat(),
         network: 'MTN'
       }
-      this.$http.post('/direct_debits.json', JSON.stringify(data)).then((resp) => {
-        // console.log(resp.data)
-        alert('Transaction Successful')
-      })
+      this.$http
+        .post('/direct_debits.json', JSON.stringify(data))
+        .then((resp) => {
+          // console.log(resp.data)
+          alert('Transaction Processing')
+        })
       // fetch(url, {
       //   method: 'POST',
       //   headers: {
@@ -109,7 +111,9 @@ export default {
       this.momo = ''
     },
     randomRef () {
-      return 'PYSTCK ' + ((Math.random() * (10024 - 1024) + 1024) * 10000).toFixed(0)
+      return (
+        'PYSTCK ' + ((Math.random() * (10024 - 1024) + 1024) * 10000).toFixed(0)
+      )
     },
     parseCurrency (amount) {
       return new Intl.NumberFormat('en-NG', {
