@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Layout from './components/Layout.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -9,12 +10,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: () => import('./components/Layout.vue')
+      component: Layout
     },
     {
       path: '/shopping',
       name: 'shopping',
-      component: () => import('./components/Layout.vue')
+      component: Layout
     },
     {
       path: '/signup',
@@ -25,6 +26,10 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: () => import('./components/Login.vue')
+    },
+    {
+      path: '/*',
+      component: Layout
     }
   ]
 })

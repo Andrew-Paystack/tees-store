@@ -1,7 +1,7 @@
 <template>
   <div class="cart">
     <div class="title">
-      <h1>Paystack Brand Store</h1>
+      <h1>Paystack Gift Store</h1>
     </div>
     <div class="header">
       <h2>Login</h2>
