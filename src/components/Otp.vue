@@ -36,7 +36,7 @@ export default {
     submitOTP () {
       this.loading = true
       const data = {
-        momo: this.momo
+        otp: this.otp
       }
       // this.$router.push('/shopping')
       this.$http
