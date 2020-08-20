@@ -42,7 +42,7 @@ export default {
       return this.momo && this.momo.length === 10 && regex.test(this.momo)
     },
     isPasswordGood () {
-      return this.password.length > 7
+      return this.password.length >= 7
     }
   },
   methods: {

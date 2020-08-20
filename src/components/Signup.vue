@@ -19,7 +19,7 @@
       <input type="password" v-model="password" />
     </div>
     <div class="form-item">
-      <button :disabled="!isNumberValid || !isPasswordGood" @click="signup">Sign Up</button>
+      <button :disabled="!isNumberValid" @click="signup">Sign Up</button>
     </div>
     <div class="form-item">
       Already have an account?
@@ -46,16 +46,12 @@ export default {
       return (
         this.momo &&
         this.momo.length === 10 &&
-        regex.test(this.momo) &&
-        this.password.length > 7
+        regex.test(this.momo) && this.password.length >= 7
       )
     },
     isNameValid () {
       const regex = /^[a-z][a-z '-.,]{0,31}$|^$/i
       return this.name && regex.test(this.name)
-    },
-    isPasswordGood () {
-      return this.password.length > 7
     }
   },
   methods: {
