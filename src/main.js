@@ -8,6 +8,7 @@ Vue.config.productionTip = false
 
 const instance = axios.create({
   baseURL: 'https://cors-anywhere.herokuapp.com/pstk-itc-mobile-money.herokuapp.com/',
+  // 'http://localhost:3000',
   // withCredentials: true,
   headers: { 'Content-Type': 'application/json' }
 })

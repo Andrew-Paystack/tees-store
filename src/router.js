@@ -23,6 +23,11 @@ export default new Router({
       component: () => import('./components/Signup.vue')
     },
     {
+      path: '/verify-otp',
+      name: 'otp',
+      component: () => import('./components/Otp.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('./components/Login.vue')

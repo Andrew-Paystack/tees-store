@@ -4,37 +4,23 @@
       <h1>Paystack Gift Store</h1>
     </div>
     <div class="header">
-      <h2>Sign Up</h2>
+      <h2>Enter OTP</h2>
     </div>
     <div class="form-item">
-      <label>Name</label>
-      <input type="text" v-model="name" placeholder="Jane Doe" />
+      <label>Please enter the OTP sent to your phone</label>
+      <input v-model="otp" />
     </div>
     <div class="form-item">
-      <label>Mobile Money number</label>
-      <input v-model="momo" placeholder="Ex: 0240974010" />
-    </div>
-    <div class="form-item">
-      <label>Password</label>
-      <input type="password" v-model="password" />
-    </div>
-    <div class="form-item">
-      <button :disabled="!isNumberValid || !isPasswordGood" @click="signup">Sign Up</button>
-    </div>
-    <div class="form-item">
-      Already have an account?
-      <router-link :to="{name: 'login'}">Login here</router-link>
+      <button :disabled="!isNumberValid" @click="submitOTP">Verify</button>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data: () => ({
-    name: '',
-    password: '',
-    momo: '',
-    loading: false,
-    auth: {}
+    otp: '',
+    loading: false
   }),
   props: {
     source: String,
@@ -42,62 +28,47 @@ export default {
   },
   computed: {
     isNumberValid () {
-      const regex = /^[0]{1}[0-9]*$/
-      return (
-        this.momo &&
-        this.momo.length === 10 &&
-        regex.test(this.momo) &&
-        this.password.length > 7
-      )
-    },
-    isNameValid () {
-      const regex = /^[a-z][a-z '-.,]{0,31}$|^$/i
-      return this.name && regex.test(this.name)
-    },
-    isPasswordGood () {
-      return this.password.length > 7
+      const regex = /^[0-9]*$/
+      return this.otp && this.otp.length === 6 && regex.test(this.otp)
     }
   },
   methods: {
-    signup () {
+    submitOTP () {
       this.loading = true
       const data = {
-        name: this.name,
-        momo: this.momo,
-        password: this.password
+        momo: this.momo
       }
       // this.$router.push('/shopping')
       this.$http
-        .post('/signup.json', JSON.stringify(data))
+        .post('/verify-otp.json', JSON.stringify(data))
         .then((resp) => {
           this.loading = false
           if (!resp.data) {
             // this.snack(resp.data.message, 'error')
             return
           }
-          localStorage.setItem('shopper', JSON.stringify(resp.data))
-          this.$router.push('/verify-otp')
+          this.$router.push('/login')
         })
         .catch((err) => {
           this.loading = false
-          // this.snack('A network error occured', 'error')
-          alert('We run into an error. Please check your inputs.  ' + err)
+          //   this.snack('A network error occured', 'error')
+          alert('We run into an error. Please check the credentials. ' + err)
         })
     }
   }
 }
 </script>
-
 <style lang="scss" scoped>
 $gray: #f2f5f7;
 .cart {
   display: flex;
   flex-direction: column;
   margin: auto;
-  padding: 10px;
   width: 50%;
   .title {
     margin-top: 50px;
+  }
+  .header {
   }
   .form-item {
     display: flex;

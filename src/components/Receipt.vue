@@ -78,7 +78,7 @@ export default {
         .post('/direct_debits.json', JSON.stringify(data))
         .then((resp) => {
           // console.log(resp.data)
-          alert('Transaction Processing')
+          alert('Please check your phone for transaction approval')
         })
       // fetch(url, {
       //   method: 'POST',

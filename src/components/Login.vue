@@ -15,7 +15,7 @@
       <input type="password" v-model="password" />
     </div>
     <div class="form-item">
-      <button :disabled="!isNumberValid" @click="login">Login</button>
+      <button :disabled="!isNumberValid || !isPasswordGood" @click="login">Login</button>
     </div>
     <div class="form-item">
       Don't have an account?
@@ -42,7 +42,7 @@ export default {
       return this.momo && this.momo.length === 10 && regex.test(this.momo)
     },
     isPasswordGood () {
-      return false
+      return this.password.length > 7
     }
   },
   methods: {
@@ -64,10 +64,10 @@ export default {
           localStorage.setItem('shopper', JSON.stringify(resp.data))
           this.$router.push('/shopping')
         })
-        .catch((err) => {
+        .catch(() => {
           this.loading = false
           //   this.snack('A network error occured', 'error')
-          alert('We run into a network error  ' + err)
+          alert('We run into an error. Please check the credentials. ')
         })
     }
   }
