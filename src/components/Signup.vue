@@ -74,10 +74,10 @@ export default {
           localStorage.setItem('shopper', JSON.stringify(resp.data))
           this.$router.push('/verify-otp')
         })
-        .catch((err) => {
+        .catch(() => {
           this.loading = false
           // this.snack('A network error occured', 'error')
-          alert('We run into an error. Please check your inputs.  ' + err)
+          alert('We run into an error. Please check your inputs & try again.')
         })
     }
   }
