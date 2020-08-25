@@ -59,7 +59,7 @@ export default {
       this.loading = true
       const data = {
         name: this.name,
-        momo: this.momo,
+        momo: this.momoFormat(),
         password: this.password
       }
       // this.$router.push('/shopping')
@@ -79,6 +79,13 @@ export default {
           // this.snack('A network error occured', 'error')
           alert('We run into an error. Please check your inputs & try again.')
         })
+    },
+    momoFormat () {
+      if (this.momo.charAt(0) === '0') {
+        return this.momo.replace('0', '+233')
+      } else {
+        return this.momo
+      }
     }
   }
 }
