@@ -19,7 +19,7 @@
       <input type="password" v-model="password" />
     </div>
     <div class="form-item">
-      <button :disabled="!isNumberValid" @click="signup">Sign Up</button>
+      <button :disabled="!isNumberValid || !isNameValid" @click="signup">Sign Up</button>
     </div>
     <div class="form-item">
       Already have an account?
@@ -59,7 +59,7 @@ export default {
       this.loading = true
       const data = {
         name: this.name,
-        momo: this.momoFormat(),
+        momo: this.momo,
         password: this.password
       }
       // this.$router.push('/shopping')
@@ -71,7 +71,7 @@ export default {
             // this.snack(resp.data.message, 'error')
             return
           }
-          localStorage.setItem('shopper', JSON.stringify(resp.data))
+          localStorage.setItem('shopper', JSON.stringify(resp.data.momo))
           this.$router.push('/verify-otp')
         })
         .catch(() => {
@@ -79,13 +79,6 @@ export default {
           // this.snack('A network error occured', 'error')
           alert('We run into an error. Please check your inputs & try again.')
         })
-    },
-    momoFormat () {
-      if (this.momo.charAt(0) === '0') {
-        return this.momo.replace('0', '+233')
-      } else {
-        return this.momo
-      }
     }
   }
 }

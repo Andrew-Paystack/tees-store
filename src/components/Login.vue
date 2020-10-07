@@ -49,7 +49,7 @@ export default {
     login () {
       this.loading = true
       const data = {
-        momo: this.momoFormat(),
+        momo: this.momo,
         password: this.password
       }
       // this.$router.push('/shopping')
@@ -59,6 +59,7 @@ export default {
           this.loading = false
           if (!resp.data) {
             // this.snack(resp.data.message, 'error')
+            alert('Invalid Credentials. Please check your inputs and try again.')
             return
           }
           localStorage.setItem('shopper', JSON.stringify(resp.data))

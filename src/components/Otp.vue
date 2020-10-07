@@ -4,14 +4,18 @@
       <h1>Paystack Gift Store</h1>
     </div>
     <div class="header">
-      <h2>Enter OTP</h2>
+      <h3>Please enter the OTP sent to your phone</h3>
     </div>
     <div class="form-item">
-      <label>Please enter the OTP sent to your phone</label>
+      <label> It may take up to 2 minutes to receive it. </label>
       <input v-model="otp" />
     </div>
     <div class="form-item">
       <button :disabled="!isNumberValid" @click="submitOTP">Verify</button>
+    </div>
+    <div class="form-item">
+      <a id="resend-link" style="display: none" @click="resendOTP">
+        OTP expired, resend OTP?</a>
     </div>
   </div>
 </template>
@@ -31,6 +35,10 @@ export default {
       const regex = /^[0-9]*$/
       return this.otp && this.otp.length === 6 && regex.test(this.otp)
     }
+  },
+  created () {
+    setTimeout(
+      function () { document.getElementById('resend-link').style = 'cursor: pointer; display: block' }, 90000)
   },
   methods: {
     submitOTP () {
@@ -52,6 +60,27 @@ export default {
         .catch((err) => {
           this.loading = false
           //   this.snack('A network error occured', 'error')
+          alert('We run into an error. Please check the credentials. ' + err)
+        })
+    },
+    resendOTP () {
+      this.$http
+        .post('/resend-otp.json', localStorage.getItem('shopper'))
+        .then((resp) => {
+          this.loading = false
+          if (!resp.data) {
+            // this.snack(resp.data.message, 'error')
+            alert('We run into an error. Please reachout to admin')
+            return
+          }
+          alert('OTP sent. Please check your phone.')
+          var link = document.getElementById('resend-link')
+          link.style.display = 'none'
+          link.style.textDecoration = 'underline'
+        })
+        .catch((err) => {
+          this.loading = false
+          //  TODO: Please tell them to apply for a new OTP.
           alert('We run into an error. Please check the credentials. ' + err)
         })
     }

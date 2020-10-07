@@ -26,6 +26,15 @@ export default {
     if (!localStorage.getItem('shopper')) {
       this.$router.push('/login')
     }
+    // End session after 10 minutes.
+    setTimeout(this.endSession, 5000)
+  },
+  methods: {
+    endSession () {
+      alert('Your session has expired. We\'re logging you out.')
+      localStorage.removeItem('shopper')
+      this.$router.push('/login')
+    }
   }
 }
 </script>

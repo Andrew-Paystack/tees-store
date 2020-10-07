@@ -10,7 +10,7 @@
       </div>
       <div class="form-item">
         <label>Address</label>
-        <textarea type="email" v-model="address" />
+        <textarea v-model="address" />
       </div>
       <div class="form-item">
         <label>Mobile Money number</label>
@@ -24,7 +24,8 @@
       </div>
     </div>
     <div class="receipt__checkout">
-      <button :disabled="!isEmailValid || loading" @click="makePayment">Checkout</button>
+      <button :disabled="!isEmailValid" @click="makePayment">Checkout</button>
+      <a id="sign-out" @click="signOut">Sign Out</a>
     </div>
   </div>
 </template>
@@ -62,6 +63,9 @@ export default {
     },
     total () {
       return this.subtotal
+    },
+    isValidAddress () {
+      return this.address.length > 5
     }
   },
   methods: {
@@ -71,32 +75,22 @@ export default {
         email: this.email,
         amount: this.total.toFixed(2),
         referenceNumber: this.randomRef(),
-        phone: this.momoFormat(),
-        network: 'MTN'
+        phone: this.momo,
+        network: 'MTN',
+        address: this.address
       }
       this.$http
         .post('/direct_debits.json', JSON.stringify(data))
         .then((resp) => {
           // console.log(resp.data)
           alert('Please check your phone for transaction approval')
+          this.resetForm()
         })
-      // fetch(url, {
-      //   method: 'POST',
-      //   headers: {
-      //     'content-type': 'application/json'
-      //   },
-      //   body: JSON.stringify(data)
-      // })
-      //   .then(response => response.json())
-      //   .then(res => {
-      //     const paystack = new window.PaystackPop()
-      //     paystack.resumeTransaction(res.data.access_code)
-      //     this.loading = false
-      //     this.resetForm()
-      //   })
-      //   .catch(() => {
-      //     // handle error here
-      //   })
+      this.loading = false
+    },
+    signOut () {
+      localStorage.removeItem('shopper')
+      this.$router.push('/login')
     },
     momoFormat () {
       if (this.momo.charAt(0) === '0') {
@@ -108,7 +102,6 @@ export default {
     resetForm () {
       this.email = ''
       this.address = ''
-      this.momo = ''
     },
     randomRef () {
       return (
