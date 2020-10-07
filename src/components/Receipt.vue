@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="receipt__checkout">
-      <button :disabled="!isEmailValid" @click="makePayment">Checkout</button>
+      <button :disabled="!isEmailValid || !isValidAmount" @click="makePayment">Checkout</button>
       <a id="sign-out" @click="signOut">Sign Out</a>
     </div>
   </div>
@@ -60,6 +60,9 @@ export default {
     },
     vat () {
       return 0.075 * this.subtotal
+    },
+    isValidAmount () {
+      return this.total.toFixed(2) >= 1.99
     },
     total () {
       return this.subtotal
