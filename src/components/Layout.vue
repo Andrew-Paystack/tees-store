@@ -27,7 +27,7 @@ export default {
       this.$router.push('/login')
     }
     // End session after 10 minutes.
-    setTimeout(this.endSession, 5000)
+    setTimeout(this.endSession, 600000)
   },
   methods: {
     endSession () {
