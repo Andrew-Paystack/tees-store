@@ -26,9 +26,13 @@
         </div>
         <div class="item__quantity">
           <div class="qty-wrapper">
-            <span class="qty-wrapper__button" @click="reduceQuantity(gift.id)">&ndash;</span>
+            <span class="qty-wrapper__button" @click="reduceQuantity(gift.id)"
+              >&ndash;</span
+            >
             <span class="qty-wrapper__value">{{ gift.quantity }}</span>
-            <span class="qty-wrapper__button" @click="increaseQuantity(gift.id)">+</span>
+            <span class="qty-wrapper__button" @click="increaseQuantity(gift.id)"
+              >+</span
+            >
           </div>
         </div>
         <div>
@@ -36,6 +40,24 @@
         </div>
       </div>
     </div>
+    <footer class="support">
+      <p>
+        Need help? Please reach out at <a
+        href='mailto:hello@paystack.com?cc=andrew@paystack.com&subject=Paystack Sample Store'>hello@paystack.com</a>
+      </p>
+      <p>
+        Social:
+        <a href="twitter.com/paystack"> Twitter</a>
+        ||
+        <a href="https://www.facebook.com/PaystackHQ/">
+          Facebook
+        </a>
+      </p>
+      <address>Paystack Ghana, <br>
+        Workshed Africa, <br>
+        <a href="https://goo.gl/maps/ehkp2pFUeLqUD86v5">47 Nungua Link Road</a>
+      </address>
+    </footer>
   </div>
 </template>
 
@@ -57,10 +79,15 @@ export default {
       this.$store.commit('cart/decrementGiftQuantity', id)
     },
     calculateUnitTotal (index) {
-      return this.parseCurrency(this.gifts[index].price * this.gifts[index].quantity)
+      return this.parseCurrency(
+        this.gifts[index].price * this.gifts[index].quantity
+      )
     },
     parseCurrency (amount) {
-      return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'GHS' }).format(amount)
+      return new Intl.NumberFormat('en-NG', {
+        style: 'currency',
+        currency: 'GHS'
+      }).format(amount)
     }
   }
 }
@@ -73,8 +100,20 @@ export default {
   }
 }
 
+footer {
+  position: relative;
+  left: auto;
+  bottom: 0;
+}
+
+address {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
 .itemlist {
-  &__header, &__body {
+  &__header,
+  &__body {
     display: grid;
     grid-template-columns: 300px repeat(3, 1fr);
     grid-gap: 12px;
@@ -100,7 +139,6 @@ export default {
 }
 
 .item {
-
   &__content {
     display: flex;
   }
@@ -137,7 +175,7 @@ export default {
   border: 1px solid #efefef;
   height: fit-content;
 
-  &__value{
+  &__value {
     width: 70px;
     height: 20px;
     margin: 0 auto;
@@ -148,13 +186,13 @@ export default {
   }
 
   &__button {
-    width:20px;
-    height:20px;
-    background:#f2f2f2;
-    border-radius:4px;
+    width: 20px;
+    height: 20px;
+    background: #f2f2f2;
+    border-radius: 4px;
     font-weight: 600;
-    padding:8px 5px 8px 5px;
-    border:1px solid #f5f3f3;
+    padding: 8px 5px 8px 5px;
+    border: 1px solid #f5f3f3;
     display: inline-block;
     vertical-align: middle;
     text-align: center;
