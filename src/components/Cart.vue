@@ -47,7 +47,7 @@
       </p>
       <p>
         Social:
-        <a href="https:///www.twitter.com/paystackHQ"> Twitter</a>
+        <a href="https:///www.twitter.com/paystack"> Twitter</a>
         ||
         <a href="https://www.facebook.com/PaystackHQ/">
           Facebook
