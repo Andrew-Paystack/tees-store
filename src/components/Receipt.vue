@@ -108,7 +108,7 @@ export default {
     },
     randomRef () {
       return (
-        'PYSTCK ' + ((Math.random() * (10024 - 1024) + 1024) * 10000).toFixed(0)
+        'PYSTCK' + ((Math.random() * (10024 - 1024) + 1024) * 10000).toFixed(0)
       )
     },
     parseCurrency (amount) {
