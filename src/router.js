@@ -13,6 +13,11 @@ export default new Router({
       component: Layout
     },
     {
+      path: '/checkout',
+      name: 'checkout',
+      component: () => import('./components/Receipt.vue')
+    },
+    {
       path: '/shopping',
       name: 'shopping',
       component: Layout

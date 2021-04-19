@@ -6,7 +6,7 @@
     "size": 3,
     "color": "Black",
     "price": 1.99,
-    "quantity": 1
+    "quantity": 0
   },
   {
     "id": 2,
@@ -15,7 +15,7 @@
     "size": 2,
     "color": "Blue",
     "price": 3.0,
-    "quantity": 1
+    "quantity": 0
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "size": 6,
     "color": "White",
     "price": 2.0,
-    "quantity": 1
+    "quantity": 0
   },
   {
     "id": 4,
@@ -33,6 +33,6 @@
     "size": 3,
     "color": "Red",
     "price": 2.99,
-    "quantity": 1
+    "quantity": 0
   }
 ]

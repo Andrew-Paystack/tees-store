@@ -1,8 +1,11 @@
 <template>
   <div class="cart">
     <div class="header">
-      <h2>Shopping cart</h2>
+      <h2>Shopping</h2>
     </div>
+    <p class="panel">
+      Please add items by clicking the <b> Add button "+"</b> then checkout on the right panel.
+    </p>
     <div class="itemlist">
       <div class="itemlist__header">
         <div>Product</div>
@@ -26,10 +29,10 @@
         </div>
         <div class="item__quantity">
           <div class="qty-wrapper">
-            <span class="qty-wrapper__button" @click="reduceQuantity(gift.id)"
+            <span title="Remove an item" class="qty-wrapper__button" @click="reduceQuantity(gift.id)"
               >&ndash;</span
             >
-            <span class="qty-wrapper__value">{{ gift.quantity }}</span>
+            <span title="Add an Item" class="qty-wrapper__value">{{ gift.quantity }}</span>
             <span class="qty-wrapper__button" @click="increaseQuantity(gift.id)"
               >+</span
             >
@@ -39,11 +42,17 @@
           {{ calculateUnitTotal(index) }}
         </div>
       </div>
+      <button id='btnProceed' @click="toCheckout">
+        Proceed
+      </button>
     </div>
     <footer class="support">
       <p>
         Need help? Please reach out at <a
         href='mailto:hello@paystack.com?cc=andrew@paystack.com&subject=Paystack Sample Store'>hello@paystack.com</a>
+      </p>
+      <p>
+        Call us on: <a href='tel:+233591566205'> +233 5915 66205 </a>
       </p>
       <p>
         Social:
@@ -54,8 +63,11 @@
         </a>
       </p>
       <address>Paystack Ghana, <br>
-        Workshed Africa, <br>
-        <a href="https://goo.gl/maps/ehkp2pFUeLqUD86v5">47 Nungua Link Road</a>
+        <a href="https://goo.gl/maps/rs11Aig5Lm9hW6898">
+           ComUnity_Spaces, <br>
+        </a>
+        Nikoi St,
+        East Legon
       </address>
     </footer>
   </div>
@@ -83,6 +95,9 @@ export default {
         this.gifts[index].price * this.gifts[index].quantity
       )
     },
+    toCheckout () {
+      this.$router.push('/checkout')
+    },
     parseCurrency (amount) {
       return new Intl.NumberFormat('en-NG', {
         style: 'currency',
@@ -96,7 +111,7 @@ export default {
 <style lang="scss" scoped>
 .cart {
   .header {
-    margin-bottom: 50px;
+    margin-bottom: 40px;
   }
 }
 
@@ -107,11 +122,12 @@ footer {
 }
 
 address {
-    position: absolute;
+    position: relative;
     right: 0;
     bottom: 0;
   }
 .itemlist {
+  margin-bottom: 36px;
   &__header,
   &__body {
     display: grid;
@@ -170,7 +186,20 @@ address {
     flex: 0 1 auto;
   }
 }
-
+.panel {
+  margin-top: 15px;
+  margin-bottom: 10;
+  border-radius: 4px;
+  padding: 14px;
+  padding-top: 24px;
+  border-color: #3bb75e !important;
+  background-color: #fff;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 1px;
+  box-sizing: border-box;
+  display: block;
+  width: 60%;
+}
 .qty-wrapper {
   border: 1px solid #efefef;
   height: fit-content;
@@ -199,4 +228,26 @@ address {
     cursor: pointer;
   }
 }
+#btnProceed {
+      background: #3bb75e;
+      color: white;
+      border-radius: 5px;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      height: 36px;
+      padding-left: 10px;
+      padding-right: 10px;
+      cursor: pointer;
+
+      &:disabled {
+        background-color: rgba(59, 183, 94, 0.65);
+        cursor: default;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
 </style>

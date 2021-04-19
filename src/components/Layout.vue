@@ -3,7 +3,7 @@
     <div class="layout__left">
       <Cart />
     </div>
-    <div class="layout__right">
+    <div :hidden="true" class="layout__right">
       <Receipt />
     </div>
     <!-- <Magazine /> -->
@@ -12,6 +12,7 @@
 
 <script>
 import Cart from './Cart.vue'
+import { mapGetters } from 'vuex'
 import Receipt from './Receipt.vue'
 // import Magazine from './Magazine.vue'
 export default {
@@ -19,8 +20,14 @@ export default {
   components: {
     Cart,
     Receipt
-
-    // Magazine
+  },
+  computed: {
+    ...mapGetters('cart', {
+      selected: 'cartTotalPrice'
+    }),
+    isValidTotal () {
+      return this.selected.toFixed(2) >= 1.99
+    }
   },
   mounted: function () {
     if (!localStorage.getItem('shopper')) {
@@ -40,21 +47,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$light-gray: #fbfbfb;
+ $light-gray: #fbfbfb;
 
-.layout {
-  display: flex;
+  .layout {
+    display: flex;
 
-  &__left {
-    width: 70vw;
-    padding: 32px;
-    background: $light-gray;
+    &__left {
+      width: 99vw;
+      padding: 32px;
+      background: $light-gray;
+    }
+
+    &__right {
+      width: 30vw;
+      height: 80vh;
+      padding: 32px;
+    }
   }
-
-  &__right {
-    width: 30vw;
-    height: 80vh;
-    padding: 32px;
-  }
-}
 </style>

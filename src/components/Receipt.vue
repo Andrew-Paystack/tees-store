@@ -1,12 +1,17 @@
 <template>
-  <div class="receipt">
-    <div class="receipt__form">
+  <b-container fluid>
+    <b-row>
+    <div class="receipt">
+      <div class="receipt__form">
       <div class="header">
-        <h2>Customer details</h2>
+        <h2>Customer Checkout</h2>
       </div>
+      <p class="panel">
+        Fill these details &amp; click Checkout to make your purchase.
+      </p>
       <div class="form-item">
         <label>Email</label>
-        <input type="email" v-model="email" />
+        <input type="email" v-model="email" class="form-control" required/>
       </div>
       <div class="form-item">
         <label>Address</label>
@@ -28,6 +33,8 @@
       <a id="sign-out" @click="signOut">Sign Out</a>
     </div>
   </div>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -39,6 +46,7 @@ export default {
     return {
       email: '',
       address: '',
+      network: 'MTN',
       momo: localStorage.getItem('shopper').replace(/"/g, ''),
       loading: false
     }
@@ -79,7 +87,7 @@ export default {
         amount: this.total.toFixed(2),
         referenceNumber: this.randomRef(),
         phone: this.momo,
-        network: 'MTN',
+        network: this.network,
         address: this.address
       }
       this.$http
@@ -123,13 +131,28 @@ export default {
 
 <style lang="scss" scoped>
 $gray: #f2f5f7;
-
+#sign-out {
+  cursor: pointer;
+}
+.panel {
+  margin-top: 15px;
+  margin-bottom: 10;
+  border-radius: 4px;
+  padding: 14px;
+  border-color: #bce8f1 !important;
+  background-color: #fff;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 1px;
+  box-sizing: border-box;
+  display: block;
+}
 .receipt {
   display: flex;
   flex-direction: column;
+  margin: 30px;
 
   &__form {
-    width: 100%;
+    width: fit-content;
     margin-bottom: 48px;
   }
 
@@ -145,7 +168,6 @@ $gray: #f2f5f7;
 
   &__checkout {
     button {
-      width: 100%;
       background: #3bb75e;
       color: white;
       border-radius: 5px;
